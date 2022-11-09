@@ -19,7 +19,19 @@ type AuthPayload struct {
 }
 
 func (app *Config) Broker(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("hit root post")
+	fmt.Println("hit / post")
+	payload := jsonRespose{
+		Error:   false,
+		Message: "Hit the Broker",
+	}
+
+	// out, _ := json.MarshalIndent(payload, "", "\t")
+	_ = app.writeJSON(w, http.StatusOK, payload)
+
+}
+
+func (app *Config) check(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("hit /check Get")
 	payload := jsonRespose{
 		Error:   false,
 		Message: "Hit the Broker",
@@ -31,7 +43,7 @@ func (app *Config) Broker(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *Config) HandleSubmission(w http.ResponseWriter, r *http.Request) {
-
+	fmt.Println("hit handle post")
 	var requestPayload RequestPayload
 	err := app.readJSON(w, r, &requestPayload)
 	if err != nil {
