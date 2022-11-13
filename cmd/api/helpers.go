@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"net/http"
 )
@@ -19,7 +20,9 @@ func (app *Config) readJSON(w http.ResponseWriter, r *http.Request, data interfa
 	r.Body = http.MaxBytesReader(w, r.Body, int64(maxBytes))
 	dec := json.NewDecoder(r.Body)
 	err := dec.Decode(data)
+	fmt.Println("decoded data", data)
 	if err != nil {
+		fmt.Println("error in decoding data")
 		return err
 	}
 	err = dec.Decode(&struct{}{})
